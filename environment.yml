@@ -1,0 +1,15 @@
+name: autograd-sparse
+channels:
+- defaults
+- conda-forge
+- ericmjl
+dependencies:
+- python=3.6
+- jupyterlab
+- numpy
+- scipy
+- ipython
+- ipykernel
+- autograd
+- black
+- pytest
