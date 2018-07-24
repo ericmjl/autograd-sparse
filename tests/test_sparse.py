@@ -30,16 +30,17 @@ def test_sparse_coo_matrix():
 def test_sparse_dense_multiplication(eye):
     """This just has to not error out."""
     dense = np.random.random(size=(5, 5))
-    eye.dot(dense)
-    assert eye.dot(dense).shape == (5, 5)
+    sp.dot(eye, dense)
+    sp.dot(dense, eye)
+
 
 
 @pytest.mark.test
 @pytest.mark.sp_sparse
 def test_sparse_dot(eye):
-    dense = np.random.random(size=(5, 5))
+    dense = np.random.random(size=(1, 5))
 
     def fun(x):
-        return sp.dot(x, dense)
+        return sp.dot(dense, x)
 
     check_grads(fun)(eye)
