@@ -34,9 +34,8 @@ def sparse_matrix_from_args(type, arg1, *args, **kwargs):
 
 
 @primitive
-def dot(sparse, dense):
-    assert not isinstance(sparse, _np.ndarray), 'the sparse array must be the first argument'
-    return sparse @ dense
+def dot(a, b):
+    return a @ b
 
 
 @primitive
