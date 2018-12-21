@@ -1,6 +1,8 @@
 import numpy as np
+
+import sparse
 from autograd.extend import VSpace
-import scipy
+import scipy.sparse as ssp
 
 class SparseArrayVSpace(VSpace):
 
@@ -19,20 +21,18 @@ class SparseArrayVSpace(VSpace):
         return len(self.shape)
 
     def randn(self):
-        a = scipy.sparse.random(m=self.shape[0], n=self.shape[1])
-        return self.t(a)
+        a = sparse.random((self.shape[0], self.shape[1]))
+        return a
 
     def zeros(self):
         return self.t(self.shape)
 
-    # def __eq__(self, other):
-    #     issametype = type(self) == type(other)
-        # issamevals = (self.value != other.value).nnz == 0
-    #     return issametype # and issamevals
+    def __eq__(self, other):
+        issametype = type(self) == type(other)
+        issamevals = (self.value != other.value).nnz == 0
+        return issametype # and issamevals
 
 
-VSpace.register(scipy.sparse.csc_matrix, lambda x: SparseArrayVSpace(x))
-VSpace.register(scipy.sparse.csr_matrix, lambda x: SparseArrayVSpace(x))
-VSpace.register(scipy.sparse.coo_matrix, lambda x: SparseArrayVSpace(x))
-VSpace.register(scipy.sparse.dia_matrix, lambda x: SparseArrayVSpace(x))
-VSpace.register(np.matrixlib.defmatrix.matrix, lambda x: VSpace(x))
+VSpace.register(sparse.COO, lambda x: SparseArrayVSpace(x))
+# VSpace.register(ssp.dia_matrix, lambda x: SparseArrayVSpace(x))
+VSpace.register(ssp.csr_matrix, lambda x: SparseArrayVSpace(x))

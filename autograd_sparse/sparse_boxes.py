@@ -1,9 +1,12 @@
 from __future__ import absolute_import
-import scipy.sparse as sp
-from autograd.extend import Box, primitive
-import autograd.numpy as np
-from autograd.numpy.numpy_boxes import ArrayBox
+
 import numpy as onp
+
+import autograd.numpy as np
+import sparse as sp
+import scipy.sparse as ssp
+from autograd.extend import Box, primitive
+from autograd.numpy.numpy_boxes import ArrayBox
 
 Box.__array_priority__ = 90.0
 
@@ -111,10 +114,10 @@ class SparseArrayBox(Box):
 
 
 # Register the types of sparse arrays
-SparseArrayBox.register(sp.dia_matrix)
-SparseArrayBox.register(sp.csr_matrix)
-SparseArrayBox.register(sp.coo_matrix)
-SparseArrayBox.register(sp.csc_matrix)
+SparseArrayBox.register(sp.COO)
+SparseArrayBox.register(ssp.csr_matrix)
+# SparseArrayBox.register(sp.coo_matrix)
+# SparseArrayBox.register(sp.csc_matrix)
 
 for type_ in [float, np.float64, np.float32, np.float16,
               complex, np.complex64, np.complex128]:

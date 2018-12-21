@@ -1,9 +1,11 @@
+import pdb
+
+import pytest
+
 import autograd.numpy as np
 import autograd_sparse as sp
 from autograd import elementwise_grad as egrad
-import pytest
 from autograd import grad
-import pdb
 from autograd.test_util import check_grads
 
 
@@ -14,18 +16,19 @@ def eye():
 
 
 # ----- tests for array creation ----- #
-@pytest.mark.works
+@pytest.mark.passes
 @pytest.mark.sparse
 def test_sparse_coo_matrix():
     """This just has to not error out."""
-    data = np.array([1, 2, 3]).astype('float32')
-    rows = np.array([1, 2, 3]).astype('float32')
-    cols = np.array([1, 3, 4]).astype('float32')
-    sparse = sp.coo_matrix(data, (rows, cols))
+    data = [1, 1, 1, 1]
+    coords = [[0, 1, 2, 3],
+              [0, 1, 2, 3]]
+    sparse = sp.COO(coords, data)
     print(sparse.shape)
 
 
 # ----- tests for array multiplication ----- #
+@pytest.mark.passes
 @pytest.mark.sparse
 def test_sparse_dense_multiplication(eye):
     """This just has to not error out."""
@@ -36,8 +39,8 @@ def test_sparse_dense_multiplication(eye):
 
 
 @pytest.mark.test
-@pytest.mark.sp_sparse
-def test_sparse_dot(eye):
+@pytest.mark.sparse
+def test_sparse_dot_grad(eye):
     dense = np.random.random(size=(1, 5))
 
     def fun(x):
