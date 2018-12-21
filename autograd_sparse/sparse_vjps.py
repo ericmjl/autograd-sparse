@@ -15,7 +15,7 @@ def _dot_vjp_0(ans, sparse, dense):
   if anp.ndim(sparse) == 2 and anp.ndim(dense) == 1:
       return lambda g: g[:, None] * dense
   if anp.ndim(sparse) == 1 and anp.ndim(dense) == 2:
-      return lambda g: anp.dot(dense, g)
+      return lambda g: sp.dot(dense, g)
   return lambda g: sp.dot(g, dense.T)
 
 def _dot_vjp_1(ans, sparse, dense):
@@ -31,6 +31,5 @@ def _dot_vjp_1(ans, sparse, dense):
     if anp.ndim(sparse) == 1 and anp.ndim(dense) == 2:
         return lambda g: sparse[:, None] * g
     return lambda g: sp.dot(sparse.T, g)
-
 
 defvjp(sp.dot, _dot_vjp_0, _dot_vjp_1)
