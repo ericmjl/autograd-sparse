@@ -13,3 +13,4 @@ dependencies:
 - autograd
 - black
 - pytest
+- sparse
