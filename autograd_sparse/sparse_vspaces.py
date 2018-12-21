@@ -34,5 +34,4 @@ class SparseArrayVSpace(VSpace):
 
 
 VSpace.register(sparse.COO, lambda x: SparseArrayVSpace(x))
-# VSpace.register(ssp.dia_matrix, lambda x: SparseArrayVSpace(x))
 VSpace.register(ssp.csr_matrix, lambda x: SparseArrayVSpace(x))
