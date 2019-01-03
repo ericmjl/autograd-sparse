@@ -38,9 +38,9 @@ def test_sparse_dense_multiplication(eye):
 @pytest.mark.test
 @pytest.mark.sp_sparse
 def test_sparse_dot(eye):
-    dense = np.random.random(size=(1, 5))
-
+    dense = np.random.random(size=(1, 1))
+    sparse = eye
     def fun(x):
-        return sp.dot(dense, x)
+        return sp.dot(sparse, x)
 
-    check_grads(fun)(eye)
+    check_grads(fun)(np.ones([5, 1]))
