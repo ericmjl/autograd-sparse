@@ -1,4 +1,5 @@
 import scipy.sparse as _sp
+import scipy.sparse.linalg as _spl
 from autograd.extend import primitive
 import numpy as _np
 
@@ -37,7 +38,14 @@ def sparse_matrix_from_args(type, arg1, *args, **kwargs):
 def dot(a, b):
     return a @ b
 
+@primitive
+def spsolve(a, b):
+    return _spl.spsolve(a, b)
 
 @primitive
 def eye(N):
     return _sp.eye(N)
+
+@primitive
+def sp_rand(N):
+    return _sp.random(N, N, density=0.5) + _sp.eye(N)
