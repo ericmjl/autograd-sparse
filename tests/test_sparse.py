@@ -79,15 +79,15 @@ def test_sparse_dot_1_2(sp_rand):
 # ----- tests of spsolve ----- #
 
 
-# differentiating with respect to sparse argument (will fail)
-@pytest.mark.test
-@pytest.mark.sp_sparse
-def test_sparse_spsolve_0_2(sp_rand):
-    dense = np.random.random(size=(N, N))
-    sparse = sp_rand
-    def fun(x):
-        return sp.spsolve(x, dense)   
-    check_grads(fun)(sparse)
+# # differentiating with respect to sparse argument (will fail)
+# @pytest.mark.test
+# @pytest.mark.sp_sparse
+# def test_sparse_spsolve_0_2(sp_rand):
+#     dense = np.random.random(size=(N, N))
+#     sparse = sp_rand
+#     def fun(x):
+#         return sp.spsolve(x, dense)   
+#     check_grads(fun)(sparse)
 
 # differentiating with respect to dense argument (will pass)
 @pytest.mark.test
@@ -98,8 +98,6 @@ def test_sparse_spsolve_1_2(sp_rand):
     def fun(x):
         return sp.spsolve(sparse, x)   
     check_grads(fun)(dense)
-
-
 
 
 

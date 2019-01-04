@@ -25,6 +25,12 @@ class SparseArrayVSpace(VSpace):
     def zeros(self):
         return self.t(self.shape)
 
+    def _inner_prod(self, x, y):
+        x_vec = x.reshape((-1, 1))
+        y_vec = y.reshape((-1, 1))
+        dot_prod = np.sum(x_vec.T.dot(y_vec))
+        return dot_prod
+
     # def __eq__(self, other):
     #     issametype = type(self) == type(other)
         # issamevals = (self.value != other.value).nnz == 0
