@@ -2,8 +2,8 @@ import numpy as np
 from autograd.extend import VSpace
 import scipy
 
-class SparseArrayVSpace(VSpace):
 
+class SparseArrayVSpace(VSpace):
     def __init__(self, value):
         self.t = type(value)
         self.value = self.t(value)
@@ -31,10 +31,19 @@ class SparseArrayVSpace(VSpace):
         dot_prod = np.sum(x_vec.T.dot(y_vec))
         return dot_prod
 
-    # def __eq__(self, other):
-    #     issametype = type(self) == type(other)
-        # issamevals = (self.value != other.value).nnz == 0
-    #     return issametype # and issamevals
+    def __eq__(self, other):
+        isequal = True
+        for k in self.__dict__.keys():
+            vself = self.__dict__[k]
+            vother = other.__dict__[k]
+            if k == "data" or k == "value":
+                if not (vself == vother).todense().all():
+                    isequal = False
+            else:
+                if not vself == vother:
+                    isequal = False
+
+        return type(self) == type(other) and isequal
 
 
 VSpace.register(scipy.sparse.csc_matrix, lambda x: SparseArrayVSpace(x))

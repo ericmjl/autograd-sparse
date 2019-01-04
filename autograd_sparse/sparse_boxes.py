@@ -8,14 +8,14 @@ import numpy as onp
 Box.__array_priority__ = 90.0
 
 
-
 # Define a general box for a sparse array.
 class SparseArrayBox(Box):
     __slots__ = []
     __array_priority__ = 110.0
 
     @primitive
-    def __getitem__(A, idx): return A[idx]
+    def __getitem__(A, idx):
+        return A[idx]
 
     # Constants w.r.t float data just pass though
     shape = property(lambda self: self._value.shape)
@@ -116,8 +116,15 @@ SparseArrayBox.register(sp.csr_matrix)
 SparseArrayBox.register(sp.coo_matrix)
 SparseArrayBox.register(sp.csc_matrix)
 
-for type_ in [float, np.float64, np.float32, np.float16,
-              complex, np.complex64, np.complex128]:
+for type_ in [
+    float,
+    np.float64,
+    np.float32,
+    np.float16,
+    complex,
+    np.complex64,
+    np.complex128,
+]:
     SparseArrayBox.register(type_)
 
 # These numpy.ndarray methods are just refs to an equivalent numpy function
